@@ -6,14 +6,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    methods obj = new methods();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) throws {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow(). requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
@@ -29,17 +31,38 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    obj.authenticate(uname.toString(), passwd.toString());
+                    background auth = new background();
+                    auth.execute(uname.getText().toString(), passwd.getText().toString());
 
-                }
-                catch (java.lang.Exception e)
-                {
-                    e.printStackTrace();
+                    JSONObject authresponse = null;
+                    try {
+
+                         authresponse = auth.get();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    try {
+
+                        if (authresponse.getBoolean("response")) {
+                           //Successful Authentication
+
+
+                        }
+                       else
+                        {
+                            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    catch (Exception e )
+                    {
+                        e.printStackTrace();
+                    }
                 }
 
-                }
-        });
+                });
 
 
 
