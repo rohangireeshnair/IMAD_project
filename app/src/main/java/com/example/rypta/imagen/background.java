@@ -1,6 +1,7 @@
 package com.example.rypta.imagen;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -27,7 +28,7 @@ public class background extends AsyncTask <String, Void, JSONObject>{
         HttpURLConnection req=null;
         String response = "";
 
-        String url = "";
+        String url = "http://10.0.2.2:80/Login.php";
         try {
              serverurl = new URL(url);
         }
@@ -59,8 +60,8 @@ public class background extends AsyncTask <String, Void, JSONObject>{
             req.setRequestMethod("POST");
             req.setDoInput(true);
             req.setDoOutput(true);
-            req.setRequestProperty("Content-Type", "application/json");
-            req.setRequestProperty("Accept", "application/json");
+            //req.setRequestProperty("Content-Type", "application/json");
+            //req.setRequestProperty("Accept", "application/json");
 
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -93,7 +94,7 @@ public class background extends AsyncTask <String, Void, JSONObject>{
     try {
 
 
-        if (req.getResponseCode() == 200) {
+     //   if (req.getResponseCode() == 200) {
             InputStream inp = req.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inp, "iso-8859-1"));
 
@@ -105,10 +106,14 @@ public class background extends AsyncTask <String, Void, JSONObject>{
             }
             bufferedReader.close();
             inp.close();
-        }
+       // }
 
         req.disconnect();
-    respj = new JSONObject(response);
+        String d=response+" chutiya";
+        Log.i("response",d);
+
+
+         respj = new JSONObject(response);
     }
     catch (Exception e) {
     e.printStackTrace();
