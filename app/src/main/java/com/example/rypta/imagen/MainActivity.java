@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (authresponse.getBoolean("response")) {
                            //Successful Authentication
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
 
                         }

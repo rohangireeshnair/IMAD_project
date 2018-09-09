@@ -12,10 +12,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
-
+import java.net.URLEncoder;
 
 
 public class background extends AsyncTask <String, Void, JSONObject>{
@@ -65,10 +66,23 @@ public class background extends AsyncTask <String, Void, JSONObject>{
             e.printStackTrace();
         }
 
+        String json =null;
+
+        try {
+
+
+            json = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(authj.toString(), "UTF-8");
+        }
+
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+
         DataOutputStream wr = null;
         try {
             wr = new DataOutputStream(req.getOutputStream());
-            wr.writeBytes(authj.toString());
+            wr.writeBytes(json);
             wr.flush();
             wr.close();
         } catch (IOException e) {
