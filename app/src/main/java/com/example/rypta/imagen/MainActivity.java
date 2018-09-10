@@ -1,5 +1,7 @@
 package com.example.rypta.imagen;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -49,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
                         if (authresponse.getBoolean("response")) {
                            //Successful Authentication
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            String key = authresponse.getString("key");
+                            SharedPreferences pref = MainActivity.this.getPreferences(MODE_PRIVATE);
+                            pref.edit().putString("key", key);
+                            Intent PostloginIntent = new Intent(MainActivity.this, PostLogin.class);
+                            startActivity(PostloginIntent);
 
 
                         }
