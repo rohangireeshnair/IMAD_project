@@ -3,8 +3,10 @@ package com.example.rypta.imagen;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,13 +29,11 @@ public class PostLogin extends AppCompatActivity {
         TextView followerc = (TextView)findViewById(R.id.followerc);
         TextView followingc = (TextView)findViewById(R.id.followingc);
         ImageView profilepic = (ImageView)findViewById(R.id.profilepic);
-        List<Image> imagelist = new ArrayList<>();
 
         backgroundforpostlogin getobj = new backgroundforpostlogin();
-        SharedPreferences pref = PostLogin.this.getSharedPreferences("com.example.rypta.imagen", MODE_PRIVATE);
-         String key = pref.getString("key", "");
-//        String key = PostLogin.this.getIntent().getStringExtra("key");
-        String uname = pref.getString("uname","");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String key = preferences.getString("key", "defaultValue");
+        String uname = preferences.getString("uname", "defaultValue");
         getobj.execute(key,uname);
 
         JSONObject response = null;
@@ -48,8 +48,8 @@ public class PostLogin extends AppCompatActivity {
 
         try {
             String name = response.getString("firstname") +" "+ response.getString("lastname");
-            int follower = response.getInt("count1");
-            int following = response.getInt("count2");
+            String follower = response.getString("count1");
+            String following = response.getString("count2");
             String imagestr = response.getString("profilepic");
             byte[] decodestring = android.util.Base64.decode(imagestr, android.util.Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodestring, 0,decodestring.length);

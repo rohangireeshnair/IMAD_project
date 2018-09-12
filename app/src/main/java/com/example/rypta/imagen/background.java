@@ -20,28 +20,24 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 
-public class background extends AsyncTask <String, Void, JSONObject>{
+public class background extends AsyncTask<String, Void, JSONObject> {
 
     @Override
     protected JSONObject doInBackground(String... strings) {
-        URL serverurl =null;
-        HttpURLConnection req=null;
+        URL serverurl = null;
+        HttpURLConnection req = null;
         String response = "";
 
         String url = "http://192.168.137.1/Login.php";
         try {
-             serverurl = new URL(url);
-        }
-        catch (java.net.MalformedURLException e)
-        {
+            serverurl = new URL(url);
+        } catch (java.net.MalformedURLException e) {
             e.printStackTrace();
         }
 
         try {
-             req = (HttpURLConnection) serverurl.openConnection();
-        }
-        catch (java.io.IOException e)
-        {
+            req = (HttpURLConnection) serverurl.openConnection();
+        } catch (java.io.IOException e) {
             e.printStackTrace();
         }
         String uname = strings[0];
@@ -51,9 +47,7 @@ public class background extends AsyncTask <String, Void, JSONObject>{
         try {
             authj.put("username", uname);
             authj.put("password", passwd);
-        }
-
-        catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
@@ -66,16 +60,13 @@ public class background extends AsyncTask <String, Void, JSONObject>{
             e.printStackTrace();
         }
 
-        String json =null;
+        String json = null;
 
         try {
 
 
             json = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(authj.toString(), "UTF-8");
-        }
-
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -89,32 +80,30 @@ public class background extends AsyncTask <String, Void, JSONObject>{
             e.printStackTrace();
         }
 
-   JSONObject respj = null;
-    try {
+        JSONObject respj = null;
+        try {
 
 
-       if (req.getResponseCode() == 200) {
-            InputStream inp = req.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inp, "iso-8859-1"));
+            if (req.getResponseCode() == 200) {
+                InputStream inp = req.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inp, "iso-8859-1"));
 
-            String line = "";
+                String line = "";
 
-            while ((line = bufferedReader.readLine()) != null) {
+                while ((line = bufferedReader.readLine()) != null) {
 
-                response += line;
+                    response += line;
+                }
+                bufferedReader.close();
+                inp.close();
             }
-            bufferedReader.close();
-            inp.close();
-        }
 
-        req.disconnect();
+            req.disconnect();
 
 
-
-         respj = new JSONObject(response);
-    }
-    catch (Exception e) {
-    e.printStackTrace();
+            respj = new JSONObject(response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return respj;
     }
