@@ -77,12 +77,4 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="215dp" />
-
 </RelativeLayout>

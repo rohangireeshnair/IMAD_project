@@ -52,9 +52,11 @@ public class MainActivity extends AppCompatActivity {
                            //Successful Authentication
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             String key = authresponse.getString("key");
-                            SharedPreferences pref = MainActivity.this.getPreferences(MODE_PRIVATE);
+                            SharedPreferences pref = MainActivity.this.getSharedPreferences("com.example.rypta.imagen", MODE_PRIVATE);
                             pref.edit().putString("key", key);
+                            pref.edit().putString("uname",uname.getText().toString() );
                             Intent PostloginIntent = new Intent(MainActivity.this, PostLogin.class);
+                            PostloginIntent.putExtra("key",key);
                             startActivity(PostloginIntent);
 
 
