@@ -1,9 +1,9 @@
 package com.example.rypta.imagen;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,34 +19,42 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-
-public class background extends AsyncTask<String, Void, JSONObject> {
+public class ShowImages extends AsyncTask <String,Void,JSONObject> {
 
     @Override
     protected JSONObject doInBackground(String... strings) {
-        URL serverurl = null;
-        HttpURLConnection req = null;
+        URL serverurl =null;
+        HttpURLConnection req=null;
         String response = "";
 
-        String url = "http://10.0.2.2/Login.php";
+        String url = "http://10.0.2.2/GetImages.php";
         try {
             serverurl = new URL(url);
-        } catch (java.net.MalformedURLException e) {
+        }
+        catch (java.net.MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
         try {
             req = (HttpURLConnection) serverurl.openConnection();
-        } catch (java.io.IOException e) {
+        }
+        catch (java.io.IOException e)
+        {
             e.printStackTrace();
         }
-        String uname = strings[0];
-        String passwd = strings[1];
 
-        JSONObject authj = new JSONObject();
+        String key = strings[0];
+        String uname = strings[1];
+        //String uname2= strings[2];
+        JSONObject puller = new JSONObject();
+
+
         try {
-            authj.put("username", uname);
-            authj.put("password", passwd);
+            puller.put("key", key);
+            puller.put("uname",uname);
+          //  puller.put("uname",uname2);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,12 +69,14 @@ public class background extends AsyncTask<String, Void, JSONObject> {
         }
 
         String json = null;
-
         try {
 
 
-            json = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(authj.toString(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+            json = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(puller.toString(), "UTF-8");
+        }
+
+        catch (UnsupportedEncodingException e)
+        {
             e.printStackTrace();
         }
 
@@ -79,6 +89,8 @@ public class background extends AsyncTask<String, Void, JSONObject> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
         JSONObject respj = null;
         try {
@@ -100,9 +112,11 @@ public class background extends AsyncTask<String, Void, JSONObject> {
 
             req.disconnect();
 
+            Log.i("reuest",response);
 
             respj = new JSONObject(response);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return respj;

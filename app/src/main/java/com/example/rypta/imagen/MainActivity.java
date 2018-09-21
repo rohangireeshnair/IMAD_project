@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
         final TextView uname, passwd;
         Button signup, login;
 
-        uname = (TextView)findViewById(R.id.uname);
-        passwd = (TextView)findViewById(R.id.passwd);
-        signup = (Button)findViewById(R.id.signupb);
-        login = (Button)findViewById(R.id.loginb);
+        uname = findViewById(R.id.uname);
+        passwd = findViewById(R.id.passwd);
+        signup = findViewById(R.id.signupb);
+        login = findViewById(R.id.loginb);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
