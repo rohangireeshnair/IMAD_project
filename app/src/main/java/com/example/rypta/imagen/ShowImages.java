@@ -27,7 +27,7 @@ public class ShowImages extends AsyncTask <String,Void,JSONObject> {
         HttpURLConnection req=null;
         String response = "";
 
-        String url = "http://10.0.2.2/GetImages.php";
+        String url = "http://192.168.137.1/GetImages.php";
         try {
             serverurl = new URL(url);
         }

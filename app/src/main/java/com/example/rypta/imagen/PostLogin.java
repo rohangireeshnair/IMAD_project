@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,10 +71,13 @@ public class PostLogin extends AppCompatActivity {
             String size = response1.getString("index");
             int siz=Integer.parseInt(size);
             Log.i("size",size);
+            int g=Integer.parseInt(size);
+            JSONArray ss=new JSONArray();
+            ss=response1.getJSONArray("images");
             for(i=0;i<siz;i++)
             {
 
-                String imagestring = response1.getString("images");
+                String imagestring = ss.getString(i);
                 byte[] decodedstring = android.util.Base64.decode(imagestring, android.util.Base64.DEFAULT);
                 Bitmap decodedB = BitmapFactory.decodeByteArray(decodedstring, 0,decodedstring.length);
                 Profile p=new Profile(decodedB);

@@ -26,7 +26,7 @@ public class backgroundforpostlogin extends AsyncTask <String,Void,JSONObject> {
         HttpURLConnection req=null;
         String response = "";
 
-        String url = "http://10.0.2.2/Profile.php";
+        String url = "http://192.168.137.1/Profile.php";
         try {
             serverurl = new URL(url);
         }

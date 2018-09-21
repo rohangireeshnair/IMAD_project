@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     try {
+                        boolean g=authresponse.getBoolean("response");
 
                         if (authresponse.getBoolean("response")) {
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
