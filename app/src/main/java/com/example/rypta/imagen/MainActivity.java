@@ -32,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         signup = findViewById(R.id.signupb);
         login = findViewById(R.id.loginb);
 
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Register.class);
+                startActivity(intent);
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

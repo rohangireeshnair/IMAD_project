@@ -107,6 +107,7 @@ public class Register extends AppCompatActivity {
                 imageb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        imagechose();
 
 
 
