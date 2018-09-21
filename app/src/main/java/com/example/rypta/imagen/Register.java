@@ -23,6 +23,7 @@ import java.io.IOException;
 
 public class Register extends AppCompatActivity {
     public  Bitmap bitmap = null;
+    public String image = null;
 
     public void imagechose(){
         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), 3);
@@ -47,6 +48,13 @@ public class Register extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
+        byte[] b = baos.toByteArray();
+
+        image = Base64.encodeToString(b,Base64.DEFAULT);
+
     }
 
     @Override
@@ -60,11 +68,7 @@ public class Register extends AppCompatActivity {
         final TextView uname = (TextView)findViewById(R.id.uname);
         final TextView passwd = (TextView)findViewById(R.id.passwd);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
-        byte[] b = baos.toByteArray();
 
-        final String image = Base64.encodeToString(b,Base64.DEFAULT);
 
 
 
@@ -99,9 +103,6 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-
-
-
 
 
                 imageb.setOnClickListener(new View.OnClickListener() {
