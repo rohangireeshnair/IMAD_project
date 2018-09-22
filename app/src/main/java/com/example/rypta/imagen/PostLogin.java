@@ -120,6 +120,12 @@ public class PostLogin extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                adap=new InstaFeed(PostLogin.this,bitmapArray);
+
+                lv.setHasFixedSize(true);
+                lv.setLayoutManager(new LinearLayoutManager(PostLogin.this,LinearLayoutManager.VERTICAL,false));
+
+                lv.setAdapter(adap);
                 refresh.setRefreshing(false);
 
             }
@@ -207,8 +213,8 @@ public class PostLogin extends AppCompatActivity {
                     if (responseb)
                     {
                         Toast.makeText(PostLogin.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(PostLogin.this, PostLogin.class);
-                        startActivity(i);
+                       // Intent i = new Intent(PostLogin.this, PostLogin.class);
+                       // startActivity(i);
                     }
                     else
                     {
