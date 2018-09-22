@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class PostLogin extends AppCompatActivity {
+    ArrayList<Profile> bitmapArray = new ArrayList<Profile>();
 
     RecyclerView lv;
     InstaFeed adap;
@@ -77,6 +79,52 @@ public class PostLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_login);
 
+        final SwipeRefreshLayout refresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh.setRefreshing(true);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PostLogin.this);
+                String key = preferences.getString("key", "defaultValue");
+                uname = preferences.getString("uname", "defaultValue");
+                ShowImages obj = new ShowImages();
+                obj.execute(key, uname, uname);
+                JSONObject response1 = new JSONObject();
+                try {
+
+                    response1 = obj.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                try {
+
+                    JSONArray ss = new JSONArray();
+                    String size = response1.getString("index");
+                    int siz = Integer.parseInt(size);
+                    ss = response1.getJSONArray("images");
+                    int i;
+                    bitmapArray.clear();
+                    for (i = 0; i < siz; i++) {
+
+                        String imagestring = ss.getString(i);
+                        byte[] decodedstring = android.util.Base64.decode(imagestring, android.util.Base64.DEFAULT);
+                        Bitmap decodedB = BitmapFactory.decodeByteArray(decodedstring, 0, decodedstring.length);
+                        Profile p = new Profile(decodedB);
+                        bitmapArray.add(p);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                refresh.setRefreshing(false);
+
+            }
+        });
+
         TextView Name = findViewById(R.id.Name);
         TextView followerc = findViewById(R.id.followerc);
         TextView followingc = findViewById(R.id.followingc);
@@ -111,7 +159,7 @@ public class PostLogin extends AppCompatActivity {
             Name.setText(name);
             followerc.setText(follower);
             followingc.setText(following);
-            ArrayList<Profile> bitmapArray = new ArrayList<Profile>();
+
             Bitmap myBitMap;
             int i;
             lv=findViewById(R.id.recyclerV);
@@ -119,8 +167,9 @@ public class PostLogin extends AppCompatActivity {
             int siz=Integer.parseInt(size);
             Log.i("size",size);
             int g=Integer.parseInt(size);
-            JSONArray ss=new JSONArray();
+            JSONArray ss= new JSONArray();
             ss=response1.getJSONArray("images");
+            bitmapArray.clear();
             for(i=0;i<siz;i++)
             {
 

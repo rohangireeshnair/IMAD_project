@@ -77,6 +77,14 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="191dp">
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerV"
         android:layout_width="match_parent"
@@ -85,6 +93,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="191dp" />
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <ImageButton
         android:id="@+id/imageButton"
