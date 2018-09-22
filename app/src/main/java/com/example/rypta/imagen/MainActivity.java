@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     try {
                         boolean g=authresponse.getBoolean("response");
-
+                        Log.i("bool","hello");
                         if (authresponse.getBoolean("response")) {
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             String key = authresponse.getString("key");

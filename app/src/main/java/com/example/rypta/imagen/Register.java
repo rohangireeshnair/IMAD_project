@@ -26,7 +26,7 @@ public class Register extends AppCompatActivity {
     public String image = null;
 
     public void imagechose(){
-        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), 3);
+        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), 1);
 
 
     }
@@ -35,7 +35,7 @@ public class Register extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==3 && resultCode == Activity.RESULT_OK) {
+        if(requestCode==1 && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
 
             try {
