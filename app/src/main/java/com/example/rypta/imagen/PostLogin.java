@@ -78,6 +78,15 @@ public class PostLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_login);
+        ImageButton searchbutton = (ImageButton)findViewById(R.id.searchb1);
+        searchbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PostLogin.this, Search.class);
+                startActivity(intent);
+
+            }
+        });
 
         final SwipeRefreshLayout refresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".PostLogin" />
         <activity android:name=".Register" />
-        <activity android:name=".backgroundforupload"></activity>
+        <activity android:name=".backgroundforupload" />
+        <activity android:name=".Search"></activity>
     </application>
 
 </manifest>

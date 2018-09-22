@@ -46,14 +46,14 @@ public class ShowImages extends AsyncTask <String,Void,JSONObject> {
 
         String key = strings[0];
         String uname = strings[1];
-        //String uname2= strings[2];
+        String uname2= strings[2];
         JSONObject puller = new JSONObject();
 
 
         try {
             puller.put("key", key);
             puller.put("uname",uname);
-          //  puller.put("uname",uname2);
+            puller.put("uname1",uname2);
 
         } catch (JSONException e) {
             e.printStackTrace();
