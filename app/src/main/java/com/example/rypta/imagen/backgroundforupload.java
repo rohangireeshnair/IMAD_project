@@ -28,7 +28,7 @@ public class backgroundforupload extends AsyncTask<String,Void,JSONObject> {
         HttpURLConnection req = null;
         String response = "";
 
-        String url = "http://192.168.137.1/Upload.php";
+        String url = "http://192.168.43.85/Upload.php";
         try {
             serverurl = new URL(url);
         } catch (java.net.MalformedURLException e) {

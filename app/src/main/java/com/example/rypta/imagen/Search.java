@@ -1,5 +1,6 @@
 package com.example.rypta.imagen;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,9 +10,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -23,27 +29,52 @@ import java.util.concurrent.ExecutionException;
 
 public class Search extends AppCompatActivity {
 
+    EditText uname1;
+    ImageView profilepic;
     RecyclerView lv;
     InstaFeed adap;
+    backgroundforpostlogin getobj;
     ArrayList<Profile> bitmapArray = new ArrayList<Profile>();
-
+    ShowImages obj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-       final ShowImages obj = new ShowImages();
-       final backgroundforpostlogin getobj = new backgroundforpostlogin();
-       final TextView uname1 = (TextView)findViewById(R.id.searchtext);
-        ImageButton searchb = (ImageButton)findViewById(R.id.imageButton4);
+
+
+       uname1 = (EditText) findViewById(R.id.searchtext);
+        final ImageButton searchb = (ImageButton)findViewById(R.id.imageButton4);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
       final  String key = preferences.getString("key", "defaultValue");
        final String uname = preferences.getString("uname", "defaultValue");
-       final ImageView profilepic = (ImageView)findViewById(R.id.profilepic2);
+       profilepic = (ImageView)findViewById(R.id.profilepic2);
         final TextView Name = (TextView)findViewById(R.id.sname);
+        final RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.rlayout);
+        uname1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+
+                    // Do what you want
+                    relativeLayout.setVisibility(View.INVISIBLE);
+                    return false;
+                }
+
+                return true;
+            }
+        });
+
         searchb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getobj.execute(key,uname);
+
+                profilepic = (ImageView)findViewById(R.id.profilepic2);
+                uname1 = (EditText) findViewById(R.id.searchtext);
+               // this.Search.setOnGetMessageTask(new ShowImages());
+                relativeLayout.setVisibility(View.VISIBLE);
+                obj = new ShowImages();
+                getobj = new backgroundforpostlogin();
+                getobj.execute(key,uname1.getText().toString());
                 obj.execute(key,uname,uname1.getText().toString());
                 JSONObject response = null;
                 JSONObject response1 = null;
@@ -56,7 +87,11 @@ public class Search extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 try {
+                    searchb.clearFocus();
+                    InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(searchb.getWindowToken(), 0);
                     String name = response.getString("firstname") + " " + response.getString("lastname");
+                    Log.i("mass",name+"");
 //                    String follower = response.getString("count1");
 //                    String following = response.getString("count2");
                     String imagestr = response.getString("profilepic");

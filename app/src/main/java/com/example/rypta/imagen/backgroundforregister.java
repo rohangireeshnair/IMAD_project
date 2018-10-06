@@ -25,7 +25,7 @@ public class backgroundforregister extends AsyncTask<String,Void,JSONObject> {
         HttpURLConnection req = null;
         String response = "";
 
-        String url = "http://192.168.137.1/Register.php";
+        String url = "http://192.168.43.85/Register.php";
         try {
             serverurl = new URL(url);
         } catch (java.net.MalformedURLException e) {
