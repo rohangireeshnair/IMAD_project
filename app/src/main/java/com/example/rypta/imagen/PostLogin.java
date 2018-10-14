@@ -22,6 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +38,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.google.android.gms.internal.zzben.NULL;
+
 public class PostLogin extends AppCompatActivity {
     ArrayList<Profile> bitmapArray = new ArrayList<Profile>();
 
@@ -41,7 +47,11 @@ public class PostLogin extends AppCompatActivity {
     InstaFeed adap;
     String image="";
     String uname;
-    Button but;
+    Button but,but1;
+    Button butter;
+    Button logout;
+
+    private DatabaseReference dbr = FirebaseDatabase.getInstance().getReference().getRoot();
     public Bitmap bitmap=null;
     //final TextView lname;
     public void imagechose(){
@@ -87,7 +97,19 @@ public class PostLogin extends AppCompatActivity {
 
             }
         });
-
+        logout = (Button)findViewById(R.id.logout);
+        butter = (Button)findViewById(R.id.but);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences1 = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.remove("key");
+                editor.commit();
+                Intent ii1 = new Intent(PostLogin.this,MainActivity.class);
+                startActivity(ii1);
+            }
+        });
         final SwipeRefreshLayout refresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -140,11 +162,19 @@ public class PostLogin extends AppCompatActivity {
             }
         });
 
-        TextView Name = findViewById(R.id.Name);
-        TextView followerc = findViewById(R.id.followerc);
-        TextView followingc = findViewById(R.id.followingc);
-        ImageView profilepic = findViewById(R.id.profilepic);
-        but = findViewById(R.id.uploadButton);
+        TextView Name = (TextView) findViewById(R.id.Name);
+       // TextView followerc = (TextView) findViewById(R.id.followerc);
+       // TextView followingc = (TextView) findViewById(R.id.followingc);
+        ImageView profilepic = (ImageView) findViewById(R.id.profilepic);
+        but = (Button) findViewById(R.id.uploadButton);
+        but1 = (Button) findViewById(R.id.follow);
+        but1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ii=new Intent(PostLogin.this,FollowActivity.class);
+                startActivity(ii);
+            }
+        });
         backgroundforpostlogin getobj = new backgroundforpostlogin();
         ShowImages obj = new ShowImages();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -162,7 +192,16 @@ public class PostLogin extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
+        butter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(PostLogin.this,"clicked",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(PostLogin.this, DiscussionActivity.class);
+                //i.putExtra("selected_topic", "Android App Development");
+                i.putExtra("user_name", uname);
+                startActivity(i);
+            }
+        });
         try {
             String name = response.getString("firstname") +" "+ response.getString("lastname");
             String follower = response.getString("count1");
@@ -172,12 +211,12 @@ public class PostLogin extends AppCompatActivity {
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodestring, 0,decodestring.length);
             profilepic.setImageBitmap(decodedByte);
             Name.setText(name);
-            followerc.setText(follower);
-            followingc.setText(following);
+         //   followerc.setText(follower);
+         //   followingc.setText(following);
 
             Bitmap myBitMap;
             int i;
-            lv=findViewById(R.id.recyclerV);
+            lv= (RecyclerView) findViewById(R.id.recyclerV);
             String size = response1.getString("index");
             int siz=Integer.parseInt(size);
             Log.i("size",size);
@@ -206,7 +245,6 @@ public class PostLogin extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     backgroundforupload back = new backgroundforupload();
-                    //Log.i("chutiya",image);
                     back.execute(uname,image);
                     JSONObject response11 = null;
                     boolean responseb=false;

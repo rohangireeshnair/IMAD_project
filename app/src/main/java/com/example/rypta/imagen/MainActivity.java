@@ -28,10 +28,21 @@ public class MainActivity extends AppCompatActivity {
         final TextView uname, passwd;
         Button signup, login;
 
-        uname = findViewById(R.id.uname);
-        passwd = findViewById(R.id.passwd);
-        signup = findViewById(R.id.signupb);
-        login = findViewById(R.id.loginb);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String key = preferences.getString("key", null);
+        if(key!=null)
+        Log.i("mssg",key);
+        if(key!=null)
+        {
+            Intent i = new Intent(MainActivity.this,PostLogin.class);
+            startActivity(i);
+        }
+        uname = (TextView) findViewById(R.id.uname);
+        passwd = (TextView) findViewById(R.id.passwd);
+        uname.setText("");
+        passwd.setText("");
+        signup = (Button) findViewById(R.id.signupb);
+        login = (Button) findViewById(R.id.loginb);
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override

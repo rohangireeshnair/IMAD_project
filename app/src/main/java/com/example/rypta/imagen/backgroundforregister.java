@@ -1,6 +1,7 @@
 package com.example.rypta.imagen;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ public class backgroundforregister extends AsyncTask<String,Void,JSONObject> {
         HttpURLConnection req = null;
         String response = "";
 
-        String url = "http://192.168.43.85/Register.php";
+        String url = "http://192.168.137.1/Register.php";
         try {
             serverurl = new URL(url);
         } catch (java.net.MalformedURLException e) {
@@ -76,6 +77,7 @@ public class backgroundforregister extends AsyncTask<String,Void,JSONObject> {
 
 
             jsonr = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(json.toString(), "UTF-8");
+            Log.i("mseg",jsonr);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

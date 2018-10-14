@@ -104,7 +104,7 @@ public class Search extends AppCompatActivity {
 
                     Bitmap myBitMap;
                     int i;
-                    lv = findViewById(R.id.recyclerV);
+                    lv = (RecyclerView) findViewById(R.id.recyclerV);
                     String size = response1.getString("index");
                     int siz = Integer.parseInt(size);
                     Log.i("size", size);
@@ -127,7 +127,7 @@ public class Search extends AppCompatActivity {
                     }
 
 
-                    lv = findViewById(R.id.listid);
+                    lv = (RecyclerView) findViewById(R.id.listid);
         adap = new InstaFeed(Search.this, bitmapArray);
         lv.setHasFixedSize(true);
         lv.setLayoutManager(new LinearLayoutManager(Search.this,LinearLayoutManager.VERTICAL,false));
